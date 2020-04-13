@@ -90,6 +90,6 @@ with open('result.bean', 'w') as f:
             f.write("  Assets:Current:招商银行借记卡\t" + str(record.amount) + " CNY\n")
         else:
             f.write("  Liabilities:Current:招商银行贷记卡\t" + str(record.amount) + " CNY\n")
-        f.write("  Expenses:Undefined:待定\t0.0 CNY\n\n")
+        f.write("  Expenses:Undefined:待定\n\n")
         
 
