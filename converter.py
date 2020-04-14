@@ -29,12 +29,13 @@ for x in os.listdir('.'):
             for row in f_csv:
                 if isValidLine and len(row) > 1:
                     row.insert(0,isDebetCard)
-                    lines.append(row)
+                    if(row[1].strip()!="尚未入账"):
+                        lines.append(row)
                 if not isValidLine:
-                    if len(row) > 0 and row[0].strip() == '对账标志':
+                    if len(row) > 0 and row[1].strip() == '记账日期':
                         isValidLine = True
                         isDebetCard = False
-                    if len(row) > 0 and row[0].strip() == '交易日期':
+                    if len(row) > 0 and row[1].strip() == '交易时间':
                         isValidLine = True
 
 records = []
@@ -54,7 +55,10 @@ records = []
 #   Assets:Current:招商银行借记卡                     500 CNY
 #   Assets:Investment:基金股票
 
+# [True, '\t2020-04-10', '\t2020-04-11', '\t财付通-童志华＆草鸡蛋蛋糕扬', '\tCN', '7473', '\t￥9.80', '9.80']
+
 for row in lines:
+    print(row)
     isDebetCard = row[0]
     if (isDebetCard):
         tmpDate = row[1].strip()
@@ -66,8 +70,8 @@ for row in lines:
             amount = float(row[3])
         records.append(Record(date=tmpDate,description= row[7].strip(),amount= amount, isDebetCard = isDebetCard))
     else:
-        tmpAmount = 0-locale.atof((row[6]))
-        tmpRecord = Record(date=row[2].strip(),description=row[4].strip(),amount=tmpAmount,isDebetCard=isDebetCard)
+        tmpAmount = 0-locale.atof((row[6].strip()[1:-1].strip()))
+        tmpRecord = Record(date=row[1].strip(),description=row[3].strip(),amount=tmpAmount,isDebetCard=isDebetCard)
         records.append(tmpRecord)
 
         
