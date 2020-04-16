@@ -32,10 +32,10 @@ for x in os.listdir('.'):
                     if(row[1].strip()!="尚未入账"):
                         lines.append(row)
                 if not isValidLine:
-                    if len(row) > 0 and row[1].strip() == '记账日期':
+                    if len(row) > 1 and row[1].strip() == '记账日期':
                         isValidLine = True
                         isDebetCard = False
-                    if len(row) > 0 and row[1].strip() == '交易时间':
+                    if len(row) > 1 and row[1].strip() == '交易时间':
                         isValidLine = True
 
 records = []
@@ -58,7 +58,6 @@ records = []
 # [True, '\t2020-04-10', '\t2020-04-11', '\t财付通-童志华＆草鸡蛋蛋糕扬', '\tCN', '7473', '\t￥9.80', '9.80']
 
 for row in lines:
-    print(row)
     isDebetCard = row[0]
     if (isDebetCard):
         tmpDate = row[1].strip()
@@ -70,7 +69,7 @@ for row in lines:
             amount = float(row[3])
         records.append(Record(date=tmpDate,description= row[7].strip(),amount= amount, isDebetCard = isDebetCard))
     else:
-        tmpAmount = 0-locale.atof((row[6].strip()[1:-1].strip()))
+        tmpAmount = 0-locale.atof((row[6].strip()[1:]))
         tmpRecord = Record(date=row[1].strip(),description=row[3].strip(),amount=tmpAmount,isDebetCard=isDebetCard)
         records.append(tmpRecord)
 
