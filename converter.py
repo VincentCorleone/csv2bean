@@ -88,7 +88,7 @@ records.sort(key=cmp_to_key(compareDate))
 
 with open('result.bean', 'w') as f:
     for record in records:
-        f.write(record.date + " * \"" + record.description + "\"\n")
+        f.write(record.date[0:10] + " * \"" + record.description + "\"\n")
         if(record.isDebetCard):
             f.write("  Assets:Current:招商银行借记卡\t" + str(record.amount) + " CNY\n")
         else:
