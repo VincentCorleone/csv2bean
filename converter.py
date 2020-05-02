@@ -80,7 +80,7 @@ for row in lines:
 
 def compareDate(x,y):
     difference = datetime.strptime(x.date ,'%Y-%m-%d %H:%M:%S') - datetime.strptime(y.date,'%Y-%m-%d %H:%M:%S')
-    return difference.seconds
+    return difference.total_seconds()
 
 
 
