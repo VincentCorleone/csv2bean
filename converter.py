@@ -67,10 +67,10 @@ for row in lines:
             amount = 0 - float(row[4])
         elif(row[4] == ''):
             amount = float(row[3])
-        records.append(Record(date=tmpDate,description= row[7].strip(),amount= amount, isDebetCard = isDebetCard))
+        records.append(Record(date=tmpDate + " " + row[2],description= row[7].strip(),amount= amount, isDebetCard = isDebetCard))
     else:
         tmpAmount = 0-locale.atof((row[6].strip()[1:]))
-        tmpRecord = Record(date=row[1].strip(),description=row[3].strip(),amount=tmpAmount,isDebetCard=isDebetCard)
+        tmpRecord = Record(date=(row[1].strip() + " 12:00:00").strip(),description=row[3].strip(),amount=tmpAmount,isDebetCard=isDebetCard)
         records.append(tmpRecord)
 
         
@@ -79,8 +79,8 @@ for row in lines:
         # records.append(Record(date=))
 
 def compareDate(x,y):
-    difference = datetime.strptime(x.date,'%Y-%m-%d') - datetime.strptime(y.date,'%Y-%m-%d')
-    return difference.days
+    difference = datetime.strptime(x.date ,'%Y-%m-%d %H:%M:%S') - datetime.strptime(y.date,'%Y-%m-%d %H:%M:%S')
+    return difference.seconds
 
 
 
